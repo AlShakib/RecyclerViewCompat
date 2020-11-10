@@ -27,13 +27,25 @@
 
 package dev.alshakib.rvcompat.example;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import dev.alshakib.rvcompat.example.adapter.CountryListAdapterCompat;
+import dev.alshakib.rvcompat.example.data.model.Country;
 import dev.alshakib.rvcompat.example.databinding.ActivityMainBinding;
+import dev.alshakib.rvcompat.viewholder.ViewHolderCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements ViewHolderCompat.OnItemClickListener, ViewHolderCompat.OnItemLongClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private ActivityMainBinding viewBinding;
@@ -43,5 +55,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         viewBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
+        setSupportActionBar(viewBinding.materialToolbar);
+
+        viewBinding.recyclerView.setHasFixedSize(true);
+        viewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        CountryListAdapterCompat countryListAdapterCompat = new CountryListAdapterCompat(this);
+        viewBinding.recyclerView.setAdapter(countryListAdapterCompat);
+
+        countryListAdapterCompat.submitList(fetchData());
+        countryListAdapterCompat.setOnItemClickListener(this);
+        countryListAdapterCompat.setOnItemLongClickListener(this);
+    }
+
+    private List<Country> fetchData() {
+        List<Country> countryList = new ArrayList<>();
+        String[] dataSet = getResources().getStringArray(R.array.countries_array);
+
+        for (int i = 0; i < dataSet.length; ++i) {
+            countryList.add(new Country(i, dataSet[i]));
+        }
+        return countryList;
+    }
+
+    @Override
+    public void onItemClick(@NonNull View v, int viewType, int position) {
+        if (v.getId() == R.id.more_options_button) {
+            Toast.makeText(this, "More options clicked; Position: " + position, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Item clicked; Position: " + position, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public boolean onItemLongClick(@NonNull View v, int viewType, int position) {
+        Toast.makeText(this, "Item long clicked; Position: " + position, Toast.LENGTH_SHORT).show();
+        return true;
     }
 }

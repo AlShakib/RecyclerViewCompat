@@ -25,8 +25,22 @@
  *
  */
 
-package dev.alshakib.rvcompat.adapter;
+package dev.alshakib.rvcompat.example.diff;
 
-public class BaseAdapter {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 
+import dev.alshakib.rvcompat.example.data.model.Country;
+
+public class CountryDiffUtilItemCallback extends DiffUtil.ItemCallback<Country> {
+
+    @Override
+    public boolean areItemsTheSame(@NonNull Country oldItem, @NonNull Country newItem) {
+        return oldItem.getId() == newItem.getId();
+    }
+
+    @Override
+    public boolean areContentsTheSame(@NonNull Country oldItem, @NonNull Country newItem) {
+        return oldItem.equals(newItem);
+    }
 }

@@ -25,42 +25,33 @@
  *
  */
 
-apply plugin: 'com.android.library'
+package dev.alshakib.rvcompat.adapter;
 
-android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.0"
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
+import dev.alshakib.rvcompat.viewholder.ViewHolderCompat;
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
+interface AdapterCompat<VH> {
 
-dependencies {
-    implementation 'androidx.paging:paging-runtime:2.1.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    @NonNull
+    LayoutInflater getLayoutInflater();
+    @NonNull
+    Context getContext();
+
+    @NonNull
+    VH onCreateViewHolderCompat(@NonNull ViewGroup parent, int viewType);
+    void onBindViewHolderCompat(@NonNull VH holder, int position);
+
+    @Nullable
+    ViewHolderCompat.OnItemClickListener getOnItemClickListener();
+    void setOnItemClickListener(@Nullable ViewHolderCompat.OnItemClickListener onItemClickListener);
+
+    @Nullable
+    ViewHolderCompat.OnItemLongClickListener getOnItemLongClickListener();
+    void setOnItemLongClickListener(@Nullable ViewHolderCompat.OnItemLongClickListener onItemLongClickListener);
 }
