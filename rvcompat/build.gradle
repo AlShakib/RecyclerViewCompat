@@ -26,6 +26,32 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+ext {
+    bintrayRepo = "RecyclerViewCompat"
+    bintrayName = "dev.alshakib.rvcompat"
+
+    publishedGroupId = 'dev.alshakib.rvcompat'
+    artifact = 'rvcompat'
+    libraryName = 'rvcompat'
+
+    libraryDescription = 'Recycler View Compat (rvcompat) is a flexible compatible library for recycler view adapter and view holder with support of OnClickListener, OnLongClickListener and many more.'
+
+    siteUrl = 'https://github.com/AlShakib/RecyclerViewCompat'
+    gitUrl = 'https://github.com/AlShakib/RecyclerViewCompat.git'
+
+    libraryVersion = "$rvcompat_version"
+
+    developerId = 'AlShakib'
+    developerName = 'Al Shakib'
+    developerEmail = 'shakib@alshakib.dev'
+
+    licenseName = 'MIT License'
+    licenseUrl = 'https://github.com/AlShakib/RecyclerViewCompat/blob/main/LICENSE'
+    allLicenses = ["MIT"]
+}
 
 android {
     compileSdkVersion 30
@@ -34,8 +60,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.0"
+        versionCode rootProject.rvcompat_version_code
+        versionName "$rvcompat_version"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -63,4 +89,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+//Add these lines to publish library to bintray. This is the readymade scripts made by github user nuuneoi to make uploading to bintray easy.
+//Place it at the end of the file
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: 'install.gradle'
+    apply from: 'bintray.gradle'
 }

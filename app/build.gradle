@@ -35,8 +35,8 @@ android {
         applicationId "dev.alshakib.rvcompat.example"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.0"
+        versionCode rootProject.rvcompat_version_code
+        versionName "$rvcompat_version"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
