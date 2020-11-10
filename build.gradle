@@ -28,8 +28,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        rvcompat_version = "1.0.0"
-        rvcompat_version_code = 1
+        rvcompat_version = "1.0.1"
+        rvcompat_version_code = 2
     }
 
     repositories {
