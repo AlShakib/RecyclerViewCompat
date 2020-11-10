@@ -29,6 +29,7 @@ package dev.alshakib.rvcompat.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -65,6 +66,12 @@ public abstract class ListAdapterCompat<T, VH extends ViewHolderCompat>
     @Override
     public LayoutInflater getLayoutInflater() {
         return layoutInflater;
+    }
+
+    @NonNull
+    @Override
+    public View inflateView(int resource, @Nullable ViewGroup root, boolean attachToRoot) {
+        return getLayoutInflater().inflate(resource, root, attachToRoot);
     }
 
     @NonNull

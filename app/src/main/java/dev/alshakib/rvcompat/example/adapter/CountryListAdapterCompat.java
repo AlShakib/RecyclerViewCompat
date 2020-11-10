@@ -53,8 +53,7 @@ public class CountryListAdapterCompat extends ListAdapterCompat<Country, ListOne
     @NonNull
     @Override
     public ListOneLineWithImageViewHolderCompat onCreateViewHolderCompat(@NonNull ViewGroup parent, int viewType) {
-        return new ListOneLineWithImageViewHolderCompat(getLayoutInflater()
-                .inflate(R.layout.list_one_line_with_image, parent, false));
+        return new ListOneLineWithImageViewHolderCompat(inflateView(R.layout.list_one_line_with_image, parent, false));
     }
 
     @Override

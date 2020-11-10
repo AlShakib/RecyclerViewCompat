@@ -29,8 +29,10 @@ package dev.alshakib.rvcompat.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -40,6 +42,8 @@ interface AdapterCompat<VH> {
 
     @NonNull
     LayoutInflater getLayoutInflater();
+    @NonNull
+    View inflateView(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot);
     @NonNull
     Context getContext();
 
