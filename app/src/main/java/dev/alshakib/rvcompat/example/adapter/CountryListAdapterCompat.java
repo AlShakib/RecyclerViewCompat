@@ -40,8 +40,10 @@ import dev.alshakib.rvcompat.example.R;
 import dev.alshakib.rvcompat.example.data.model.Country;
 import dev.alshakib.rvcompat.example.diff.CountryDiffUtilItemCallback;
 import dev.alshakib.rvcompat.example.viewholder.ListOneLineWithImageViewHolderCompat;
+import dev.alshakib.rvcompat.view.FastScrollRecyclerView;
 
-public class CountryListAdapterCompat extends ListAdapterCompat<Country, ListOneLineWithImageViewHolderCompat> {
+public class CountryListAdapterCompat extends ListAdapterCompat<Country, ListOneLineWithImageViewHolderCompat>
+        implements FastScrollRecyclerView.OnSectionName {
     private static final String LOG_TAG = CountryListAdapterCompat.class.getSimpleName();
 
     public CountryListAdapterCompat(@NonNull Context context) {
@@ -73,5 +75,14 @@ public class CountryListAdapterCompat extends ListAdapterCompat<Country, ListOne
                 .toUpperCase()
                 .drawAsRound()
                 .build();
+    }
+
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        if (getItem(position) != null) {
+            return String.valueOf(getItem(position).getName().toUpperCase().charAt(0));
+        }
+        return "";
     }
 }
