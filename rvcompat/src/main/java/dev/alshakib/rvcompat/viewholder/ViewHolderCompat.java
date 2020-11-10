@@ -33,7 +33,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class ViewHolderCompat extends RecyclerView.ViewHolder {
+public abstract class ViewHolderCompat extends RecyclerView.ViewHolder
+        implements View.OnClickListener, View.OnLongClickListener {
 
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
@@ -58,6 +59,21 @@ public abstract class ViewHolderCompat extends RecyclerView.ViewHolder {
 
     public void setOnItemLongClickListener(@Nullable OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (getOnItemClickListener() != null) {
+            getOnItemClickListener().onItemClick(v, getItemViewType(), getAdapterPosition());
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (getOnItemLongClickListener() != null) {
+            return getOnItemLongClickListener().onItemLongClick(v, getItemViewType(), getAdapterPosition());
+        }
+        return false;
     }
 
     public interface OnItemClickListener {

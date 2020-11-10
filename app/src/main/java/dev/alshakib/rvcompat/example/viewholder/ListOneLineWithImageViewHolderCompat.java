@@ -34,8 +34,7 @@ import androidx.annotation.NonNull;
 import dev.alshakib.rvcompat.example.databinding.ListOneLineWithImageBinding;
 import dev.alshakib.rvcompat.viewholder.ViewHolderCompat;
 
-public class ListOneLineWithImageViewHolderCompat extends ViewHolderCompat
-        implements View.OnClickListener, View.OnLongClickListener {
+public class ListOneLineWithImageViewHolderCompat extends ViewHolderCompat {
 
     private final ListOneLineWithImageBinding viewBinding;
 
@@ -50,20 +49,5 @@ public class ListOneLineWithImageViewHolderCompat extends ViewHolderCompat
     @NonNull
     public ListOneLineWithImageBinding getViewBinding() {
         return viewBinding;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (getOnItemClickListener() != null) {
-            getOnItemClickListener().onItemClick(v, getItemViewType(), getAdapterPosition());
-        }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        if (getOnItemLongClickListener() != null) {
-            return getOnItemLongClickListener().onItemLongClick(v, getItemViewType(), getAdapterPosition());
-        }
-        return false;
     }
 }
