@@ -27,12 +27,10 @@
 
 package dev.alshakib.rvcompat.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -41,11 +39,9 @@ import dev.alshakib.rvcompat.viewholder.ViewHolderCompat;
 interface AdapterCompat<VH> {
 
     @NonNull
-    LayoutInflater getLayoutInflater();
-    @NonNull
-    View inflateView(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot);
-    @NonNull
-    Context getContext();
+    default View inflateView(int resource, @NonNull ViewGroup root, boolean attachToRoot) {
+        return LayoutInflater.from(root.getContext()).inflate(resource, root, attachToRoot);
+    }
 
     @NonNull
     VH onCreateViewHolderCompat(@NonNull ViewGroup parent, int viewType);

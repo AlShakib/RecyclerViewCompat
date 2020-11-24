@@ -27,7 +27,6 @@
 
 package dev.alshakib.rvcompat.example.adapter;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 
@@ -46,8 +45,8 @@ public class CountryListAdapterCompat extends ListAdapterCompat<Country, ListOne
         implements FastScrollRecyclerView.OnSectionName {
     private static final String LOG_TAG = CountryListAdapterCompat.class.getSimpleName();
 
-    public CountryListAdapterCompat(@NonNull Context context) {
-        super(context, new AsyncDifferConfig.Builder<>(new CountryDiffUtilItemCallback()).build());
+    public CountryListAdapterCompat() {
+        super(new AsyncDifferConfig.Builder<>(new CountryDiffUtilItemCallback()).build());
     }
 
     @NonNull

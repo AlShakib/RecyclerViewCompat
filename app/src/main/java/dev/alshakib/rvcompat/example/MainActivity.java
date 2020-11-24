@@ -27,16 +27,15 @@
 
 package dev.alshakib.rvcompat.example;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import dev.alshakib.rvcompat.example.adapter.CountryListAdapterCompat;
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         viewBinding.recyclerView.setHasFixedSize(true);
         viewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        CountryListAdapterCompat countryListAdapterCompat = new CountryListAdapterCompat(this);
+        CountryListAdapterCompat countryListAdapterCompat = new CountryListAdapterCompat();
         viewBinding.recyclerView.setAdapter(countryListAdapterCompat);
 
         countryListAdapterCompat.submitList(fetchData());

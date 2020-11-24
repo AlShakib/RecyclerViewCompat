@@ -27,9 +27,6 @@
 
 package dev.alshakib.rvcompat.adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -44,40 +41,15 @@ public abstract class PagedListAdapterCompat<T, VH extends ViewHolderCompat>
         extends PagedListAdapter<T, VH>
         implements AdapterCompat<VH> {
 
-    private final Context context;
-    private final LayoutInflater layoutInflater;
-
     private ViewHolderCompat.OnItemClickListener onItemClickListener;
     private ViewHolderCompat.OnItemLongClickListener onItemLongClickListener;
 
-    public PagedListAdapterCompat(@NonNull Context context, @NonNull DiffUtil.ItemCallback<T> diffCallback) {
+    public PagedListAdapterCompat(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
         super(diffCallback);
-        this.context = context;
-        this.layoutInflater = LayoutInflater.from(context);
     }
 
-    public PagedListAdapterCompat(@NonNull Context context, @NonNull AsyncDifferConfig<T> config) {
+    public PagedListAdapterCompat(@NonNull AsyncDifferConfig<T> config) {
         super(config);
-        this.context = context;
-        this.layoutInflater = LayoutInflater.from(context);
-    }
-
-    @NonNull
-    @Override
-    public LayoutInflater getLayoutInflater() {
-        return layoutInflater;
-    }
-
-    @NonNull
-    @Override
-    public View inflateView(int resource, @Nullable ViewGroup root, boolean attachToRoot) {
-        return getLayoutInflater().inflate(resource, root, attachToRoot);
-    }
-
-    @NonNull
-    @Override
-    public Context getContext() {
-        return context;
     }
 
     @NonNull

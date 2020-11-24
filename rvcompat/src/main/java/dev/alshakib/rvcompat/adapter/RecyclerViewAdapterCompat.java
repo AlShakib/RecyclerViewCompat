@@ -27,9 +27,6 @@
 
 package dev.alshakib.rvcompat.adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -42,34 +39,8 @@ public abstract class RecyclerViewAdapterCompat<VH extends ViewHolderCompat>
         extends RecyclerView.Adapter<VH>
         implements AdapterCompat<VH> {
 
-    private final Context context;
-    private final LayoutInflater layoutInflater;
-
     private ViewHolderCompat.OnItemClickListener onItemClickListener;
     private ViewHolderCompat.OnItemLongClickListener onItemLongClickListener;
-
-    public RecyclerViewAdapterCompat(@NonNull Context context) {
-        this.context = context;
-        this.layoutInflater = LayoutInflater.from(context);
-    }
-
-    @NonNull
-    @Override
-    public LayoutInflater getLayoutInflater() {
-        return layoutInflater;
-    }
-
-    @NonNull
-    @Override
-    public View inflateView(int resource, @Nullable ViewGroup root, boolean attachToRoot) {
-        return getLayoutInflater().inflate(resource, root, attachToRoot);
-    }
-
-    @NonNull
-    @Override
-    public Context getContext() {
-        return context;
-    }
 
     @NonNull
     @Override
