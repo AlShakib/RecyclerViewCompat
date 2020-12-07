@@ -44,12 +44,12 @@ public abstract class ListAdapterCompat<T, VH extends ViewHolderCompat>
     private ViewHolderCompat.OnItemClickListener onItemClickListener;
     private ViewHolderCompat.OnItemLongClickListener onItemLongClickListener;
 
-    public ListAdapterCompat(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
-        super(diffCallback);
-    }
-
     public ListAdapterCompat(@NonNull AsyncDifferConfig<T> config) {
         super(config);
+    }
+
+    public ListAdapterCompat(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
+        super(diffCallback);
     }
 
     @NonNull

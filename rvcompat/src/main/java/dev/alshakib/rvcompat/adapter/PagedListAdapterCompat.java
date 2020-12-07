@@ -44,12 +44,12 @@ public abstract class PagedListAdapterCompat<T, VH extends ViewHolderCompat>
     private ViewHolderCompat.OnItemClickListener onItemClickListener;
     private ViewHolderCompat.OnItemLongClickListener onItemLongClickListener;
 
-    public PagedListAdapterCompat(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
-        super(diffCallback);
-    }
-
     public PagedListAdapterCompat(@NonNull AsyncDifferConfig<T> config) {
         super(config);
+    }
+
+    public PagedListAdapterCompat(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
+        super(diffCallback);
     }
 
     @NonNull
