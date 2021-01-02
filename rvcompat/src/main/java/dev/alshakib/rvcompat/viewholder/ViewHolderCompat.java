@@ -27,6 +27,7 @@
 
 package dev.alshakib.rvcompat.viewholder;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -39,8 +40,21 @@ public abstract class ViewHolderCompat extends RecyclerView.ViewHolder
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
 
-    public ViewHolderCompat(@NonNull View itemView) {
-        super(itemView);
+    private final View view;
+
+    public ViewHolderCompat(@NonNull View view) {
+        super(view);
+        this.view = view;
+    }
+
+    @NonNull
+    public View getView() {
+        return view;
+    }
+
+    @NonNull
+    public Context getContext() {
+        return view.getContext();
     }
 
     @Nullable
