@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Al Shakib (shakib@alshakib.dev)
+ * Copyright (c) 2021 Al Shakib (shakib@alshakib.dev)
  *
  * This file is part of Recycler View Compat
  *
@@ -28,8 +28,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        rvcompat_version = "2.0.0"
-        rvcompat_version_code = 5
+        rvcompat_version = "2.0.1"
+        rvcompat_version_code = 6
     }
 
     repositories {
