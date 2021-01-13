@@ -1,7 +1,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Al Shakib (shakib@alshakib.dev)
+  ~ Copyright (c) 2021 Al Shakib (shakib@alshakib.dev)
   ~
   ~ This file is part of Recycler View Compat
   ~
@@ -25,7 +25,7 @@
   ~
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="Theme.RecyclerViewCompat" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary</item>
