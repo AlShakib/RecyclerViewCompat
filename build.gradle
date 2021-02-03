@@ -25,11 +25,17 @@
  *
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        rvcompat_version = "2.0.1"
-        rvcompat_version_code = 6
+        // Project versions
+        project_version_code = 6
+        project_version_name = '2.0.1'
+
+        // App SDK versions
+        compileSdkVersion = 30
+        minSdkVersion = 21
+        targetSdkVersion = 30
+        buildToolsVersion = '30.0.2'
     }
 
     repositories {
@@ -37,14 +43,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
-
-        // Bintray and Maven Gradle Dependencies
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 

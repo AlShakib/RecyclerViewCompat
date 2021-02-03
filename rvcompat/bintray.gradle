@@ -26,30 +26,54 @@
  */
 
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
-version = libraryVersion
+ext {
+    // Developer information
+    developerId = 'AlShakib'
+    developerName = 'Al Shakib'
+    developerEmail = 'shakib@alshakib.dev'
 
-if (project.hasProperty("android")) { // Android libraries
-    task sourcesJar(type: Jar) {
-        archiveClassifier.set('sources')
-        from android.sourceSets.main.java.srcDirs
-    }
+    // Library information
+    libraryName = 'RecyclerViewCompat'
+    libraryDescription = 'Recycler View Compat (rvcompat) is a flexible compatible library for recycler view adapter and view holder with support of OnClickListener, OnLongClickListener and many more.'
+    libraryVersion = "$project_version_name"
+    libraryWebsiteUrl = 'https://github.com/AlShakib/RecyclerViewCompat'
+    libraryIssueTrackerUrl = 'https://github.com/AlShakib/RecyclerViewCompat/issues'
+    libraryVcsUrl = 'https://github.com/AlShakib/RecyclerViewCompat.git'
+    libraryLicenseName = 'MIT License'
+    libraryLicenseUrl = 'https://github.com/AlShakib/RecyclerViewCompat/blob/main/LICENSE'
 
-    task javadoc(type: Javadoc) {
-        source = android.sourceSets.main.java.srcDirs
-        configurations.implementation.setCanBeResolved(true)
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator)) + configurations.implementation
-    }
-} else { // Java libraries
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        archiveClassifier.set('sources')
-        from sourceSets.main.allSource
-    }
+    // Bintray information
+    bintrayRepo = 'RecyclerViewCompat'
+    bintrayPackageName = 'dev.alshakib.rvcompat'
+    bintrayArtifactId = 'rvcompat'
+    bintrayLicenses = ['MIT']
+    bintrayLabels = ['android', 'library', 'recyclerview']
+    bintrayPublish = true
+    bintrayPublicDownloadNumbers = false
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier.set('sources')
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    configurations.implementation.setCanBeResolved(true)
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator)) + configurations.implementation
+}
+
+afterEvaluate {
+    javadoc.classpath += files(android.libraryVariants.collect {
+        variant -> variant.javaCompileProvider.get().classpath.files
+    })
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier.set('javadoc')
     from javadoc.destinationDir
+    archiveClassifier.set('javadoc')
 }
 
 artifacts {
@@ -58,8 +82,45 @@ artifacts {
 }
 
 // Bintray
+version = libraryVersion
+group = bintrayPackageName // Maven Group ID for the artifact
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                groupId bintrayPackageName
+                artifactId bintrayArtifactId
+                name libraryName
+                description libraryDescription
+                url libraryWebsiteUrl
+
+                licenses {
+                    license {
+                        name libraryLicenseName
+                        url libraryLicenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection libraryVcsUrl
+                    developerConnection libraryVcsUrl
+                    url libraryVcsUrl
+                }
+            }
+        }
+    }
+}
 
 bintray {
     user = properties.getProperty("bintray.user")
@@ -68,19 +129,22 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = bintrayRepo
-        name = bintrayName
+        name = bintrayPackageName
         desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
-        publicDownloadNumbers = true
+        websiteUrl = libraryWebsiteUrl
+        issueTrackerUrl = libraryIssueTrackerUrl
+        vcsUrl = libraryVcsUrl
+        licenses = bintrayLicenses
+        labels = bintrayLabels
+        publish = bintrayPublish
+        publicDownloadNumbers = bintrayPublicDownloadNumbers
         version {
-            desc = libraryDescription
+            name = libraryVersion
+            released  = new Date()
             gpg {
-                sign = true //Determines whether to GPG sign the files. The default is false
+                sign = true // Determines whether to GPG sign the files. The default is false
                 passphrase = properties.getProperty("bintray.gpg.password")
-                //Optional. The passphrase for GPG signing'
+                // Optional. The passphrase for GPG signing'
             }
         }
     }
