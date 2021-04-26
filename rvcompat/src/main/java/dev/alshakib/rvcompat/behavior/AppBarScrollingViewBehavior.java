@@ -38,8 +38,6 @@ import com.google.android.material.appbar.AppBarLayout;
 
 public class AppBarScrollingViewBehavior extends AppBarLayout.ScrollingViewBehavior {
 
-    private AppBarLayout appBarLayout;
-
     public AppBarScrollingViewBehavior() {
         super();
     }
@@ -51,21 +49,22 @@ public class AppBarScrollingViewBehavior extends AppBarLayout.ScrollingViewBehav
     @Override
     public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child,
                                           @NonNull View dependency) {
-        if (appBarLayout == null) {
-            appBarLayout = (AppBarLayout) dependency;
-        }
+        if (dependency instanceof AppBarLayout) {
+            AppBarLayout appBarLayout = (AppBarLayout) dependency;
 
-        final boolean result = super.onDependentViewChanged(parent, child, dependency);
-        final int bottomPadding = calculateBottomPadding(appBarLayout);
-        if (bottomPadding != child.getPaddingBottom()) {
-            child.setPadding(
-                    child.getPaddingLeft(),
-                    child.getPaddingTop(),
-                    child.getPaddingRight(),
-                    bottomPadding);
-            child.requestLayout();
+            final boolean result = super.onDependentViewChanged(parent, child, dependency);
+            final int bottomPadding = calculateBottomPadding(appBarLayout);
+            if (bottomPadding != child.getPaddingBottom()) {
+                child.setPadding(
+                        child.getPaddingLeft(),
+                        child.getPaddingTop(),
+                        child.getPaddingRight(),
+                        bottomPadding);
+                child.requestLayout();
+            }
+            return bottomPadding != child.getPaddingBottom() || result;
         }
-        return bottomPadding != child.getPaddingBottom() || result;
+        return false;
     }
 
     private int calculateBottomPadding(AppBarLayout dependency) {
