@@ -679,7 +679,7 @@ public class FastScrollRecyclerView extends RecyclerView
                     objectAnimator.cancel();
                 }
                 objectAnimator = ObjectAnimator.ofFloat(this, "alpha", visible ? 1f : 0f);
-                objectAnimator.setDuration(visible ? 200 : 150);
+                objectAnimator.setDuration(300);
                 objectAnimator.start();
             }
         }
@@ -970,7 +970,7 @@ public class FastScrollRecyclerView extends RecyclerView
                                 (AndroidExt.isRtl(fastScrollRecyclerView
                                         .getResources()) ? -1 : 1) * getWidth());
                         autoHideAnimator.setInterpolator(new FastOutLinearInInterpolator());
-                        autoHideAnimator.setDuration(200);
+                        autoHideAnimator.setDuration(300);
                         autoHideAnimator.start();
                     }
                 }
@@ -1165,7 +1165,7 @@ public class FastScrollRecyclerView extends RecyclerView
                 }
                 this.autoHideAnimator = ObjectAnimator.ofInt(this, "offsetX", 0);
                 this.autoHideAnimator.setInterpolator(new LinearOutSlowInInterpolator());
-                this.autoHideAnimator.setDuration(150);
+                this.autoHideAnimator.setDuration(300);
                 this.autoHideAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationCancel(Animator animation) {
