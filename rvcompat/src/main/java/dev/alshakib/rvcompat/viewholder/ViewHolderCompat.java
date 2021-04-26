@@ -78,14 +78,14 @@ public abstract class ViewHolderCompat extends RecyclerView.ViewHolder
     @Override
     public void onClick(View v) {
         if (getOnItemClickListener() != null) {
-            getOnItemClickListener().onItemClick(v, getItemViewType(), getAdapterPosition());
+            getOnItemClickListener().onItemClick(v, getItemViewType(), getLayoutPosition());
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
         if (getOnItemLongClickListener() != null) {
-            return getOnItemLongClickListener().onItemLongClick(v, getItemViewType(), getAdapterPosition());
+            return getOnItemLongClickListener().onItemLongClick(v, getItemViewType(), getLayoutPosition());
         }
         return false;
     }
