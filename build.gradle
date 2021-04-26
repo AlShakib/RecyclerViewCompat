@@ -29,13 +29,13 @@ buildscript {
     ext {
         // Project versions
         project_version_code = 1
-        project_version_name = '2.1.0'
+        project_version_name = '2.1.1'
 
         // App SDK versions
         compileSdkVersion = 30
         minSdkVersion = 21
         targetSdkVersion = 30
-        buildToolsVersion = '30.0.2'
+        buildToolsVersion = '30.0.3'
     }
 
     repositories {
