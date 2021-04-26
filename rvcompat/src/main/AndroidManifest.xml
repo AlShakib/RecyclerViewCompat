@@ -26,6 +26,4 @@
   ~
   -->
 
-<manifest package="dev.alshakib.rvcompat">
-
-</manifest>
+<manifest package="dev.alshakib.rvcompat" />
