@@ -67,7 +67,6 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class FastScrollRecyclerView extends RecyclerView
         implements RecyclerView.OnItemTouchListener {
-    private static final String LOG_TAG = FastScrollRecyclerView.class.getSimpleName();
 
     private boolean isFastScrollEnabled;
     private int currentPositionX;
@@ -260,6 +259,8 @@ public class FastScrollRecyclerView extends RecyclerView
     }
 
     private boolean handleTouchEvent(MotionEvent motionEvent) {
+        if (!isFastScrollEnabled) return false;
+
         int action = motionEvent.getAction();
         int x = (int) motionEvent.getX();
         int y = (int) motionEvent.getY();
@@ -286,7 +287,8 @@ public class FastScrollRecyclerView extends RecyclerView
 
     private int getAvailableScrollHeight(int adapterHeight) {
         int visibleHeight = getHeight();
-        int scrollHeight = getPaddingTop() + adapterHeight + getPaddingBottom();
+        int scrollHeight = adapterHeight;
+        if (getClipToPadding()) scrollHeight += getPaddingTop() + getPaddingBottom();
         return scrollHeight - visibleHeight;
     }
 
@@ -325,9 +327,9 @@ public class FastScrollRecyclerView extends RecyclerView
         }
         int scrollBarY = (int) (((float) scrollY / availableScrollHeight) * availableScrollBarHeight);
         if (isLayoutManagerReversed()) {
-            scrollBarY = availableScrollBarHeight - scrollBarY + getPaddingBottom();
+            scrollBarY = availableScrollBarHeight - scrollBarY + (getClipToPadding() ? getPaddingBottom() : 0);
         } else {
-            scrollBarY += getPaddingTop();
+            scrollBarY += (getClipToPadding() ? getPaddingTop() : 0);
         }
 
         // Calculate the position and size of the scroll bar
@@ -340,6 +342,7 @@ public class FastScrollRecyclerView extends RecyclerView
         fastScroller.setThumbPosition(scrollBarX, scrollBarY);
     }
 
+    @SuppressWarnings("unchecked")
     private int findMeasureAdapterFirstVisiblePosition(int passedHeight) {
         if (getAdapter() instanceof OnViewHolderHeight) {
             OnViewHolderHeight<ViewHolder> onViewHolderHeight = (OnViewHolderHeight<ViewHolder>) getAdapter();
@@ -371,6 +374,7 @@ public class FastScrollRecyclerView extends RecyclerView
         }
     }
 
+    @SuppressWarnings("unchecked")
     private float findItemPosition(float touchFraction) {
         if (getAdapter() instanceof OnViewHolderHeight) {
             OnViewHolderHeight<ViewHolder> measurer = (OnViewHolderHeight<ViewHolder>) getAdapter();
@@ -429,6 +433,7 @@ public class FastScrollRecyclerView extends RecyclerView
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     private void updateCurrentScrollState(CurrentScrollState currentScrollState) {
         int itemCount = 0;
         if (getAdapter() != null) {
@@ -462,6 +467,7 @@ public class FastScrollRecyclerView extends RecyclerView
         }
     }
 
+    @SuppressWarnings("unchecked")
     private int calculateScrollDistanceToPosition(int adapterIndex) {
         if (!(getAdapter() instanceof OnViewHolderHeight)) {
             throw new IllegalStateException("calculateScrollDistanceToPosition() should only be" +
@@ -590,7 +596,6 @@ public class FastScrollRecyclerView extends RecyclerView
     }
 
     private static class FastScrollPopup {
-        private final String LOG_TAG = this.getClass().getSimpleName();
 
         private final Resources resources;
         private final FastScrollRecyclerView fastScrollRecyclerView;
@@ -784,8 +789,16 @@ public class FastScrollRecyclerView extends RecyclerView
                         backgroundRect.right = recyclerView.getWidth() - (2 * recyclerView.getScrollBarWidth());
                         backgroundRect.left = backgroundRect.right - bgWidth;
                     }
-                    backgroundRect.top = recyclerView.getPaddingTop() - recyclerView.getPaddingBottom() + thumbOffsetY - bgHeight + recyclerView.getScrollBarThumbHeight() / 2;
-                    backgroundRect.top = Math.max(recyclerView.getPaddingTop() + edgePadding, Math.min(backgroundRect.top, recyclerView.getPaddingTop() + recyclerView.getHeight() - edgePadding - bgHeight));
+                    if (recyclerView.getClipToPadding()) {
+                        backgroundRect.top = recyclerView.getPaddingTop() - recyclerView.getPaddingBottom() +
+                                thumbOffsetY - bgHeight + recyclerView.getScrollBarThumbHeight() / 2;
+                        backgroundRect.top = Math.max(recyclerView.getPaddingTop() + edgePadding,
+                                Math.min(backgroundRect.top, recyclerView.getPaddingTop() +
+                                        recyclerView.getHeight() - edgePadding - bgHeight));
+                    } else {
+                        backgroundRect.top = thumbOffsetY - bgHeight + recyclerView.getScrollBarThumbHeight() / 2;
+                        backgroundRect.top = Math.max(edgePadding, Math.min(backgroundRect.top, recyclerView.getHeight() - edgePadding - bgHeight));
+                    }
                 }
                 backgroundRect.bottom = backgroundRect.top + bgHeight;
             } else {
@@ -803,7 +816,6 @@ public class FastScrollRecyclerView extends RecyclerView
     }
 
     private static class FastScroller {
-        private final String LOG_TAG = this.getClass().getSimpleName();
 
         private static final int DEFAULT_AUTO_HIDE_DELAY = 1500;
         private static final int DEFAULT_TOUCH_INSET_IN_DP = -24;
@@ -1064,14 +1076,18 @@ public class FastScrollRecyclerView extends RecyclerView
             if (this.thumbPositionPoint.x < 0 || this.thumbPositionPoint.y < 0) {
                 return;
             }
+
+            int rvPaddingTop = this.fastScrollRecyclerView.getClipToPadding() ? this.fastScrollRecyclerView.getPaddingTop() : 0;
+            int rvPaddingBottom = this.fastScrollRecyclerView.getClipToPadding() ? this.fastScrollRecyclerView.getPaddingBottom() : 0;
+
             this.fastScrollerRectF
                     .set(this.thumbPositionPoint.x + this.offsetPoint.x + (this.thumbWidth -
                                     this.trackWidth),
-                    this.offsetPoint.y + this.fastScrollRecyclerView.getPaddingTop(),
+                    this.offsetPoint.y + rvPaddingTop,
                     this.thumbPositionPoint.x + this.offsetPoint.x + this.trackWidth +
                             (this.thumbWidth - this.trackWidth),
                     this.fastScrollRecyclerView.getHeight() + this.offsetPoint.y -
-                            this.fastScrollRecyclerView.getPaddingBottom());
+                            rvPaddingBottom);
 
             canvas.drawRoundRect(this.fastScrollerRectF, this.trackWidth, this.trackWidth,
                     this.trackPaint);
