@@ -64,7 +64,7 @@ public class AppBarScrollingViewBehavior extends AppBarLayout.ScrollingViewBehav
             }
             return bottomPadding != child.getPaddingBottom() || result;
         }
-        return false;
+        return super.onDependentViewChanged(parent, child, dependency);
     }
 
     private int calculateBottomPadding(AppBarLayout dependency) {
