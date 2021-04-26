@@ -239,8 +239,9 @@ public class FastScrollRecyclerView extends RecyclerView
             int exactItemPosition = (int) (availableScrollHeight * touchFraction);
 
             // Have smooth scrolling
-            scrollPosition = spanCount * exactItemPosition / currentScrollState.currentRowHeight;
-            scrollOffset = -(exactItemPosition % currentScrollState.currentRowHeight);
+            int rowHeight = currentScrollState.currentRowHeight > 0 ? currentScrollState.currentRowHeight : 1;
+            scrollPosition = spanCount * exactItemPosition / rowHeight;
+            scrollOffset = -(exactItemPosition % rowHeight);
         }
 
         LinearLayoutManager layoutManager = ((LinearLayoutManager) getLayoutManager());
