@@ -61,7 +61,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:clipToPadding="false"
-        app:layout_behavior="dev.alshakib.rvcompat.behavior.AppBarScrollingViewBehavior"
+        app:layout_behavior="@string/rvcompat_app_bar_scrolling_view_behavior"
         app:fastScrollPopupBackgroundColor="@color/primary"
         app:fastScrollThumbActiveColor="@color/primary"
         app:fastScrollThumbInactiveColor="@color/primary"
