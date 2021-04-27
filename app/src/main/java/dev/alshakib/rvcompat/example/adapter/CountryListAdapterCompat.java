@@ -43,7 +43,6 @@ import dev.alshakib.rvcompat.view.FastScrollRecyclerView;
 
 public class CountryListAdapterCompat extends ListAdapterCompat<Country, ListOneLineWithImageViewHolderCompat>
         implements FastScrollRecyclerView.OnSectionName {
-    private static final String LOG_TAG = CountryListAdapterCompat.class.getSimpleName();
 
     public CountryListAdapterCompat() {
         super(new AsyncDifferConfig.Builder<>(new CountryDiffUtilItemCallback()).build());
