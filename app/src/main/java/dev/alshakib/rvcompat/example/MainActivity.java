@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(@NonNull View v, int viewType, int position) {
+    public void onItemClick(@NonNull ViewHolderCompat viewHolderCompat, @NonNull View v, int viewType, int position) {
         if (v.getId() == R.id.more_options_button) {
             Toast.makeText(this, "More options clicked; Position: " + position, Toast.LENGTH_SHORT).show();
         } else {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onItemLongClick(@NonNull View v, int viewType, int position) {
+    public boolean onItemLongClick(@NonNull ViewHolderCompat viewHolderCompat, @NonNull View v, int viewType, int position) {
         Toast.makeText(this, "Item long clicked; Position: " + position, Toast.LENGTH_SHORT).show();
         return true;
     }
