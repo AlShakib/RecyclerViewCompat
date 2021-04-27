@@ -294,8 +294,11 @@ public class FastScrollRecyclerView extends RecyclerView
     }
 
     private int getAvailableScrollBarHeight() {
-        int visibleHeight = getHeight() - getPaddingTop() - getPaddingBottom();
-        return visibleHeight - fastScroller.getThumbHeight();
+        if (getClipToPadding()) {
+            int visibleHeight = getHeight() - getPaddingTop() - getPaddingBottom();
+            return visibleHeight - fastScroller.getThumbHeight();
+        }
+        return getHeight() - getPaddingBottom() - fastScroller.getThumbHeight();
     }
 
     private void updateThumbPosition(CurrentScrollState currentScrollState, int rowCount) {
