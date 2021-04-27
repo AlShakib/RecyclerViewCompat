@@ -853,13 +853,14 @@ public class FastScrollRecyclerView extends RecyclerView
         private int thumbInactiveColor;
         private boolean isThumbInactiveEnabled;
 
-        @Retention(SOURCE)
         @IntDef({PopupTextVerticalAlignmentMode.TEXT_BOUNDS, PopupTextVerticalAlignmentMode.FONT_METRICS})
+        @Retention(SOURCE)
         private @interface PopupTextVerticalAlignmentMode {
             int TEXT_BOUNDS = 0;
             int FONT_METRICS = 1;
         }
         @IntDef({PopupPosition.ADJACENT, PopupPosition.CENTER})
+        @Retention(SOURCE)
         private @interface PopupPosition {
             int ADJACENT = 0;
             int CENTER = 1;
