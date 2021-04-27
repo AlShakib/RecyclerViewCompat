@@ -927,7 +927,7 @@ public class FastScrollRecyclerView extends RecyclerView
                                 AndroidExt.convertDpToPx(resources, DEFAULT_POPUP_BACKGROUND_SIZE_IN_DP));
                 @PopupTextVerticalAlignmentMode int popupTextVerticalAlignmentMode = typedArray
                         .getInteger(R.styleable.FastScrollRecyclerView_fastScrollPopupTextVerticalAlignmentMode,
-                                PopupTextVerticalAlignmentMode.TEXT_BOUNDS);
+                                PopupTextVerticalAlignmentMode.FONT_METRICS);
                 @PopupPosition int popupPosition = typedArray
                         .getInteger(R.styleable.FastScrollRecyclerView_fastScrollPopupPosition,
                                 PopupPosition.ADJACENT);
