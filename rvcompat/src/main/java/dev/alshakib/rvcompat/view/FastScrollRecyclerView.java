@@ -259,6 +259,8 @@ public class FastScrollRecyclerView extends RecyclerView
     }
 
     private boolean handleTouchEvent(MotionEvent motionEvent) {
+        if (!isFastScrollEnabled) return false;
+
         int action = motionEvent.getAction();
         int x = (int) motionEvent.getX();
         int y = (int) motionEvent.getY();
