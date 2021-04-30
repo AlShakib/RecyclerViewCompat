@@ -248,15 +248,13 @@ public class FastScrollRecyclerView extends RecyclerView
             layoutManager.scrollToPositionWithOffset(scrollPosition, scrollOffset);
         }
 
-        if (!(getAdapter() instanceof OnSectionName)) {
-            return "";
+        if ((getAdapter() instanceof OnSectionName)) {
+            int position = (int) ((touchFraction == 1) ? getAdapter().getItemCount() - 1 : itemPos);
+
+            return ((OnSectionName) getAdapter()).getSectionName(position);
         }
 
-        int position = (int) ((touchFraction == 1) ? getAdapter().getItemCount() - 1 : itemPos);
-
-        OnSectionName onSectionName = (OnSectionName) getAdapter();
-        String section = onSectionName.getSectionName(position);
-        return TextUtils.isEmpty(section) ? "" : section;
+        return null;
     }
 
     private boolean handleTouchEvent(MotionEvent motionEvent) {
@@ -757,7 +755,7 @@ public class FastScrollRecyclerView extends RecyclerView
         }
 
         private void setSectionName(String sectionName) {
-            if (!sectionName.equals(this.sectionName)) {
+            if (!sectionName.equals(this.sectionName) && !TextUtils.isEmpty(sectionName)) {
                 this.sectionName = sectionName;
                 textPaint.getTextBounds(sectionName, 0, sectionName.length(), textRect);
                 textRect.right = (int) (textRect.left + textPaint.measureText(sectionName));
@@ -1040,7 +1038,7 @@ public class FastScrollRecyclerView extends RecyclerView
 
                         String sectionName = this.fastScrollRecyclerView.scrollToPositionAtProgress(touchFraction);
                         this.fastScrollPopup.setSectionName(sectionName);
-                        this.fastScrollPopup.animateVisibility(!sectionName.isEmpty());
+                        this.fastScrollPopup.animateVisibility(!TextUtils.isEmpty(sectionName));
                         this.fastScrollRecyclerView.invalidate(this.fastScrollPopup
                                 .updateFastScrollerBounds(this.fastScrollRecyclerView, this.thumbPositionPoint.y));
                     }
