@@ -74,12 +74,11 @@ public class CountryListAdapterCompat extends ListAdapterCompat<Country, ListOne
                 .build();
     }
 
-    @NonNull
     @Override
     public String getSectionName(int position) {
         if (getItem(position) != null) {
             return String.valueOf(getItem(position).getName().toUpperCase().charAt(0));
         }
-        return "";
+        return null;
     }
 }
