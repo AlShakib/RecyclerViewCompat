@@ -255,7 +255,8 @@ public class FastScrollRecyclerView extends RecyclerView
         int position = (int) ((touchFraction == 1) ? getAdapter().getItemCount() - 1 : itemPos);
 
         OnSectionName onSectionName = (OnSectionName) getAdapter();
-        return onSectionName.getSectionName(position);
+        String section = onSectionName.getSectionName(position);
+        return TextUtils.isEmpty(section) ? "" : section;
     }
 
     private boolean handleTouchEvent(MotionEvent motionEvent) {
@@ -536,7 +537,6 @@ public class FastScrollRecyclerView extends RecyclerView
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) { }
 
     public interface OnSectionName {
-        @NonNull
         String getSectionName(int position);
     }
 
