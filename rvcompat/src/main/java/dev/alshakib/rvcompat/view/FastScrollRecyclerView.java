@@ -755,7 +755,7 @@ public class FastScrollRecyclerView extends RecyclerView
         }
 
         private void setSectionName(String sectionName) {
-            if (!sectionName.equals(this.sectionName) && !TextUtils.isEmpty(sectionName)) {
+            if (!TextUtils.isEmpty(sectionName) && !sectionName.equals(this.sectionName)) {
                 this.sectionName = sectionName;
                 textPaint.getTextBounds(sectionName, 0, sectionName.length(), textRect);
                 textRect.right = (int) (textRect.left + textPaint.measureText(sectionName));
